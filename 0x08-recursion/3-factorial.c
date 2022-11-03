@@ -1,12 +1,18 @@
 #include "main.h"
 
-
-
-int factorial(int n)
+/**
+ * factorial - computer the factorial of a number
+ *
+ * @num: the number to compute
+ *
+ * Return: the factorial if @num is greater or equals to 0, else returns -1
+ */
+int factorial(int num)
 {
-	int fact = 0;
-	if (n == 1)
-		return 1;
-	fact = n * factorial(n-1);
-	return (fact);
+	if (num < 0)
+		return (-1);
+	else if (num == 0 || num == 1)
+		return (1);
+	else
+		return (num * factorial(num - 1));
 }
