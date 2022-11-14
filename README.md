@@ -1,1 +1,1 @@
-thursday
+this is structures typedef
