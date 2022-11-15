@@ -1,83 +1,75 @@
-#include "dog.h"
 #include <stdlib.h>
+#include "dog.h"
 
-int _strlen(char *str);
-char *_strcopy(char *dest, char *src);
-dog_t *new_dog(char *name, float age, char *owner);
-
-/**
- * _strlen - Finds the length of a string.
- * @str: The string to be measured.
- *
- * Return: The length of the string.
- */
-int _strlen(char *str)
-{
-	int len = 0;
-
-	while (*str++)
-		len++;
-
-	return (len);
-}
+char *_strdup(char *str);
 
 /**
- * _strcopy - Copies a string pointed to by src, including the
- *            terminating null byte, to a buffer pointed to by dest.
- * @dest: The buffer storing the string copy.
- * @src: The source string.
+ * new_dog - create a new dog
  *
- * Return: The pointer to dest.
- */
-char *_strcopy(char *dest, char *src)
-{
-	int index = 0;
-
-	for (index = 0; src[index]; index++)
-		dest[index] = src[index];
-
-	dest[index] = '\0';
-
-	return (dest);
-}
-
-/**
- * new_dog - Creates a new dog.
- * @name: The name of the dog.
- * @age: The age of the dog.
- * @owner: The owner of the dog.
+ * @name: name of the dog
+ * @age: age of the dog
+ * @owner: name of owner of the dog
  *
- * Return: The new struct dog.
+ * Return: pointer to the new dog instance
  */
 dog_t *new_dog(char *name, float age, char *owner)
 {
-	dog_t *doggo;
+	dog_t *dg;
 
-	if (name == NULL || age < 0 || owner == NULL)
+	if (name == NULL || owner == NULL)
 		return (NULL);
 
-	doggo = malloc(sizeof(dog_t));
-	if (doggo == NULL)
+	dg = malloc(sizeof(dog_t));
+	if (dg == NULL)
 		return (NULL);
-
-	doggo->name = malloc(sizeof(char) * (_strlen(name) + 1));
-	if (doggo->name == NULL)
+	dg->name = _strdup(name);
+	if (dg->name == NULL)
 	{
-		free(doggo);
+		free(dg);
+		return (NULL);
+	}
+	dg->age = age;
+	dg->owner = _strdup(owner);
+	if (dg->owner == NULL)
+	{
+		free(dg->name);
+		free(dg);
 		return (NULL);
 	}
 
-	doggo->owner = malloc(sizeof(char) * (_strlen(owner) + 1));
-	if (doggo->owner == NULL)
-	{
-		free(doggo->name);
-		free(doggo);
+	return (dg);
+}
+
+
+/**
+ * _strdup - duplicate a string
+ *
+ * @str: the string to copy
+ *
+ * Return: pointer to the newly allocated space in memory,
+ *	   NULL if @str is null, or insufficient memory available
+ */
+char *_strdup(char *str)
+{
+	char *newstr;
+	int i, len;
+
+	if (str == NULL)
 		return (NULL);
+
+	len = 0;
+	while (*(str + len++))
+		;
+	newstr = malloc(len * sizeof(char));
+	if (newstr == NULL)
+		return (NULL);
+
+	i = 0;
+	while (*(str + i))
+	{
+		*(newstr + i) = *(str + i);
+		++i;
 	}
-
-	doggo->name = _strcopy(doggo->name, name);
-	doggo->age = age;
-	doggo->owner = _strcopy(doggo->owner, owner);
-
-	return (doggo);
+	*(newstr + i) = '\0';
+	return (newstr);
 }
