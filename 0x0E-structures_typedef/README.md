@@ -1,1 +1,1 @@
-this is structure, typedef
+this is 0x0E structure typedef
