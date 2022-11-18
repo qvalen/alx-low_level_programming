@@ -1,1 +1,1 @@
-this is 0x10.C variadic functions
+this is 0x10 variadic function
