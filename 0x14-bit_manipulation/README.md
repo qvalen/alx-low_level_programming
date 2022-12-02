@@ -1,1 +1,1 @@
-this is 0x14 bit manipulation
+0x14-bit_manipulation readme
